@@ -3,7 +3,7 @@ from typing import List
 
 from pydantic import BaseSettings
 
-from logger import setup_custom_logger
+from app.logger import setup_custom_logger
 
 logger = setup_custom_logger('app', 10)
 

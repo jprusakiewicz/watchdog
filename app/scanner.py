@@ -1,10 +1,13 @@
+import logging
 from typing import List
 from urllib.parse import urljoin
 
 import requests
 
+from app.logger import setup_custom_logger
 from app.models import ServerScan, RoomScan, PlayersLocation
 
+logger = setup_custom_logger('scanner')
 
 class Scanner:
     def __init__(self, servers):
@@ -42,6 +45,7 @@ class Scanner:
             general_server_stats = requests.get(server_address).json()
             rooms = general_server_stats["rooms_ids"]
         except (requests.exceptions.ConnectionError, KeyError):
+            logger.log(30, f"ConnectionError: {server_address}")
             rooms = []
         return rooms
 

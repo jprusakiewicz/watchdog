@@ -9,7 +9,7 @@ from .player import Player
 from .scanner import Scanner
 from .timer import RepeatedTimer
 
-logger = setup_custom_logger('app')
+logger = setup_custom_logger('watchdog')
 
 
 class Watchdog:
@@ -57,10 +57,10 @@ class Watchdog:
         return player
 
     @staticmethod
-    def remove_player_from_server(players_location: PlayersLocation, player_id):
-        logger.info(f"removing player {player_id} from {players_location.server_path}")
+    def remove_player_from_server(players_location: PlayersLocation, player: Player):
+        logger.info(f"removing player {player.id} from {players_location.server_path}")
         try:
             requests.post(
-                urljoin(players_location.server_path, f"game/kick_player/{players_location.room_id}/{player_id}"))
+                urljoin(players_location.server_path, f"game/kick_player/{players_location.room_id}/{player.id}"))
         except requests.exceptions.ConnectionError:
             pass
